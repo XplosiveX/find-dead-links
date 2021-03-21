@@ -47,7 +47,7 @@ if __name__ == "__main__":
         exit(1)
     travel = 0
     for ounder in argv[1:]:
-        if opt.startswith("-"):
+        if ounder.startswith("-"):
             try:
                 travel = int(ounder[1:])
             except ValueError:
