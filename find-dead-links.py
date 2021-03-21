@@ -30,11 +30,11 @@ def LinkFind(url, travel):
             try:
                 newReq = requests.get(link)
                 if newReq.status_code not in [200, 302]:
-                    print("\t[" + link + "] is not valid")
+                    print("\t|||" + link + "||| is a dead link.")
                 else:
                     validLinks.append(link)
             except:
-                print("\t[" + link + "] is not valid")
+                print("\t|||" + link + "||| is a dead link.")
 
     if travel > 0:
         for link in validLinks:
