@@ -1,0 +1,6 @@
+#!/bin/bash
+script_dir=$(dirname ${BASH_SOURCE[0]})
+source ${script_dir}/fdl-env/bin/activate
+python3 ${script_dir}/find-dead-links.py $*
+# i was stressing out so hard and I realized that I Just didn't have this file and it was the whole reason my code didnt work
+# I'm so upset that I made such a simple mistake.
