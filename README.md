@@ -10,5 +10,4 @@ Clone this repository into any place your heart desires, then run the following.
 If you would like to specify a different install area please do so by chaning the everything after the `INSTALL_DIR=`
 ## Usage
 `find-dead-links <DEPTH> <URL>`
-in some cases a `./` may be needed infront of the `find-dead-links`
-keep in mind the url must specify a https:// infront for this script to function.
+keep in mind the url must specify a https:// or http:// infront for this script to function.
