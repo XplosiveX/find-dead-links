@@ -11,7 +11,7 @@ deadLinks= []
 def searchLink(url, linkDepth=0):
     try:
         r = requests.get(url)
-        searchedLinks.append(url)
+        allLinks.append(url)
         soup = BeautifulSoup(r.text, features='html.parser')
         for link in AllLinks:
             if r.status_code not in [200,302]:
