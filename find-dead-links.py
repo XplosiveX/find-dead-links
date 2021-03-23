@@ -3,7 +3,6 @@ from pathlib import Path
 import sys
 from sys import argv
 from bs4 import BeautifulSoup
-Statemanage = Path(argv[0]).stem
 AllLinks= []
 deadLinks= []
 
