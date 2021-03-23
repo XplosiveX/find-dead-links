@@ -1,59 +1,41 @@
-import requests
-from bs4 import BeautifulSoup
+import requests 
+from pathlib import Path
+import sys
 from sys import argv
+from bs4 import BeautifulSoup
+Statemanage = Path(argv[0]).stem
+AllLinks= []
+deadLinks= []
 
 
-def LinkFind(url, travel):
-    ## list of links for future use
-    foundLinks = []
-    validLink = []
+def searchLink(url, linkDepth=0):
     try:
-        req = requests.get(url)
-    except requests.exceptions.ConnectionError:
-        print( url, "Is not a valid pointer to a web address maybe you miss typed https://")
-        return
-    soup = BeautifulSoup(req.text, "html.parser")
-    for elem in soup.find_all("a"):
-        link = elem.get("href")
-        if link.startswith("/"):
-            if url.endswith("/"):
-                link = url[:-1] + link
+        r = requests.get(url)
+        searchedLinks.append(url)
+        soup = BeautifulSoup(r.text, features='html.parser')
+        for link in AllLinks:
+            if r.status_code not in [200,302]:
+                deadLinks.append(url)
+                print(deadLinks[-1])
+                print('That is a very bad looking link')
             else:
-                link = url + link
-        if link not in foundLinks:
-            foundLinks.append(link)
-
-    
-    print("On page [" + url + "]:")
-    for link in foundLinks:
-        if not link.startswith("#"):
-            try:
-                newReq = requests.get(link)
-                if newReq.status_code not in [200, 302]:
-                    print("\t|||" + link + "||| is a dead link.")
-                else:
-                    validLinks.append(link)
-            except:
-                print("\t|||" + link + "||| is a dead link.")
-
-    if travel > 0:
-        for link in validLinks:
-            LinkFind(link, travel-1)
-
-
-if __name__ == "__main__":
-    if len(argv) not in [2, 3]:
-        print("please enter commands within the following format LinkFind <URL> [-<depth>]")
+                print('That is a mighty fine looking link')
+    except:
+        deadLinks.append(url)
+if __name__ == '__main__':
+    depth = 0
+    url = ''
+    if len(argv) in [2,3]:
+        pass
+    else:
+        print("incorrect ussage syntax, please read the readme file")
         exit(1)
-    travel = 0
-    for ounder in argv[1:]:
-        if ounder.startswith("-"):
+    for arg in argv:
+        if "-" in arg:
             try:
-                travel = int(ounder[1:])
-            except ValueError:
-                print("Wrong value within travel depth".format(ounder[1:]))
-                exit(1)
+                depth = int(arg[1:])
+            except:
+                print("Invalid usage, please read the readme file for help with documentation.")
         else:
-            url = ounder
-
-    LinkFind(url, travel)
+            url = arg
+    searchLink(url, linkDepth=0)
